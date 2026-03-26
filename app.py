@@ -15,8 +15,8 @@ app.secret_key = 'patafeliz_secret_2024'
 
 # Lista de usuários cadastrados no sistema
 usuarios = [
-    {'id': 1, 'nome': 'Ana Souza',      'email': 'ana@patafeliz.com',    'perfil': 'Administrador', 'ativo': 'Sim'},
-    {'id': 2, 'nome': 'Bruno Lima',     'email': 'bruno@patafeliz.com',  'perfil': 'Veterinário',   'ativo': 'Sim'},
+    {'id': 1, 'nome': 'Ingrid Venancio', 'email': 'ingrid.venancio@patafeliz.com',    'perfil': 'Administrador', 'ativo': 'Sim'},
+    {'id': 2, 'nome': 'Andre Marquetto',     'email': 'andre@patafeliz.com',  'perfil': 'Administrador',   'ativo': 'Sim'},
     {'id': 3, 'nome': 'Carla Mendes',   'email': 'carla@patafeliz.com',  'perfil': 'Atendente',     'ativo': 'Sim'},
     {'id': 4, 'nome': 'Diego Rocha',    'email': 'diego@patafeliz.com',  'perfil': 'Atendente',     'ativo': 'Não'},
     {'id': 5, 'nome': 'Eduarda Farias', 'email': 'edu@patafeliz.com',    'perfil': 'Veterinário',   'ativo': 'Sim'},
