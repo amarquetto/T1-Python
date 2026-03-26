@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block titulo %}Usuários — PataFeliz{% endblock %}
+
+{% block conteudo %}
+
+<!-- Cabeçalho da seção -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="pagina-titulo mb-1">
+      <i class="bi bi-people-fill me-2 text-laranja"></i>Usuários do Sistema
+    </h1>
+    <p class="text-muted small mb-0">Gerencie os usuários com acesso ao PataFeliz</p>
+  </div>
+  <!-- Botão para inserir novo usuário -->
+  <a href="{{ url_for('inserir_usuario') }}" class="btn btn-laranja">
+    <i class="bi bi-plus-lg me-1"></i>Novo Usuário
+  </a>
+</div>
+
+<!-- Tabela de usuários -->
+<div class="card shadow-sm border-0">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered align-middle mb-0">
+        <thead class="thead-laranja">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col"><i class="bi bi-person me-1"></i>Nome</th>
+            <th scope="col"><i class="bi bi-envelope me-1"></i>E-mail</th>
+            <th scope="col"><i class="bi bi-shield me-1"></i>Perfil</th>
+            <th scope="col"><i class="bi bi-check-circle me-1"></i>Ativo</th>
+            <th scope="col" class="text-center">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for u in usuarios %}
+          <tr>
+            <td class="text-muted small">{{ u.id }}</td>
+            <td><strong>{{ u.nome }}</strong></td>
+            <td>{{ u.email }}</td>
+            <td>
+              <!-- Badge de perfil com cores diferentes por tipo -->
+              {% if u.perfil == 'Administrador' %}
+                <span class="badge bg-danger">{{ u.perfil }}</span>
+              {% elif u.perfil == 'Veterinário' %}
+                <span class="badge bg-primary">{{ u.perfil }}</span>
+              {% else %}
+                <span class="badge bg-secondary">{{ u.perfil }}</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if u.ativo == 'Sim' %}
+                <span class="badge bg-success">Ativo</span>
+              {% else %}
+                <span class="badge bg-danger">Inativo</span>
+              {% endif %}
+            </td>
+            <td class="text-center">
+              <!-- Botões de ação (editar/excluir) — sem rota funcional nesta entrega -->
+              <button class="btn btn-sm btn-outline-primary me-1" title="Editar usuário">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger"
+                      onclick="confirmarExclusao('{{ u.nome }}')"
+                      title="Excluir usuário">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- Rodapé da tabela com contagem -->
+  <div class="card-footer text-muted small">
+    Total de registros: <strong>{{ usuarios|length }}</strong>
+  </div>
+</div>
+
+{% endblock %}

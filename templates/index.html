@@ -1,0 +1,201 @@
+{% extends 'base_publica.html' %}
+{% block titulo %}PataFeliz PetShop — Cuidado com amor para seu pet{% endblock %}
+
+{% block conteudo %}
+
+<!-- ══════════════════════════════════════════════
+     HERO — apresentação principal
+═══════════════════════════════════════════════ -->
+<section class="hero-section text-center py-5">
+  <div class="container py-4">
+    <div class="hero-badge mb-3">🐾 Bem-vindo ao PataFeliz</div>
+    <h1 class="hero-titulo mb-3">
+      Cuidado, carinho e saúde<br>para quem você <span class="destaque-laranja">ama de quatro patas</span>
+    </h1>
+    <p class="hero-subtitulo mb-4">
+      No PataFeliz, seu pet recebe atenção especializada em banho &amp; tosa,
+      consultas veterinárias, vacinação, hospedagem e muito mais.<br>
+      Porque pet feliz é família feliz!
+    </p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+      <a href="{{ url_for('login') }}"    class="btn btn-laranja btn-lg px-5">
+        <i class="bi bi-box-arrow-in-right me-2"></i>Acessar o Sistema
+      </a>
+      <a href="{{ url_for('cadastro') }}" class="btn btn-outline-laranja btn-lg px-5">
+        <i class="bi bi-person-plus me-2"></i>Criar Conta
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     NÚMEROS / DIFERENCIAIS
+═══════════════════════════════════════════════ -->
+<section class="numeros-section py-4">
+  <div class="container">
+    <div class="row g-3 text-center">
+      <div class="col-6 col-md-3">
+        <div class="numero-card">
+          <div class="numero-valor">+500</div>
+          <div class="numero-label">Pets Atendidos</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="numero-card">
+          <div class="numero-valor">8</div>
+          <div class="numero-label">Anos de Experiência</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="numero-card">
+          <div class="numero-valor">3</div>
+          <div class="numero-label">Veterinários</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="numero-card">
+          <div class="numero-valor">98%</div>
+          <div class="numero-label">Clientes Satisfeitos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SERVIÇOS PRINCIPAIS
+═══════════════════════════════════════════════ -->
+<section class="servicos-section py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-titulo">Nossos Serviços</h2>
+      <p class="section-subtitulo">Tudo que seu pet precisa em um só lugar</p>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- Banho e Tosa -->
+      <div class="col-md-4">
+        <div class="servico-card h-100">
+          <div class="servico-icone">🛁</div>
+          <h5 class="servico-nome">Banho &amp; Tosa</h5>
+          <p class="servico-desc">
+            Banho completo com secagem, tosa higiênica ou estética, perfume e laço.
+            Seu pet sai cheiroso e lindo!
+          </p>
+          <span class="servico-preco">A partir de R$ 50,00</span>
+        </div>
+      </div>
+
+      <!-- Veterinário -->
+      <div class="col-md-4">
+        <div class="servico-card h-100 destaque">
+          <div class="servico-icone">🩺</div>
+          <h5 class="servico-nome">Consulta Veterinária</h5>
+          <p class="servico-desc">
+            Equipe veterinária especializada para cuidar da saúde do seu melhor amigo,
+            com exames, diagnósticos e prescrições.
+          </p>
+          <span class="servico-preco">R$ 150,00 / consulta</span>
+        </div>
+      </div>
+
+      <!-- Vacinação -->
+      <div class="col-md-4">
+        <div class="servico-card h-100">
+          <div class="servico-icone">💉</div>
+          <h5 class="servico-nome">Vacinação</h5>
+          <p class="servico-desc">
+            Vacinas essenciais como antirrábica, V8, V10 e gripe felina.
+            Mantemos o cartão de vacinação sempre atualizado.
+          </p>
+          <span class="servico-preco">A partir de R$ 45,00</span>
+        </div>
+      </div>
+
+      <!-- Hotel -->
+      <div class="col-md-4">
+        <div class="servico-card h-100">
+          <div class="servico-icone">🏠</div>
+          <h5 class="servico-nome">Hotel para Pets</h5>
+          <p class="servico-desc">
+            Hospedagem confortável e segura com monitoramento 24h, alimentação
+            e muito carinho enquanto você viaja.
+          </p>
+          <span class="servico-preco">R$ 120,00 / diária</span>
+        </div>
+      </div>
+
+      <!-- Adestramento -->
+      <div class="col-md-4">
+        <div class="servico-card h-100">
+          <div class="servico-icone">🎓</div>
+          <h5 class="servico-nome">Adestramento</h5>
+          <p class="servico-desc">
+            Treinamento positivo para cães com comportamentos básicos, socialização
+            e comandos avançados. Resultado garantido!
+          </p>
+          <span class="servico-preco">R$ 200,00 / sessão</span>
+        </div>
+      </div>
+
+      <!-- Hidratação -->
+      <div class="col-md-4">
+        <div class="servico-card h-100">
+          <div class="servico-icone">✨</div>
+          <h5 class="servico-nome">Hidratação de Pelagem</h5>
+          <p class="servico-desc">
+            Tratamento especial para pelos ressecados ou danificados.
+            Devolve brilho, maciez e saúde para o pelinho do seu pet.
+          </p>
+          <span class="servico-preco">A partir de R$ 45,00</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     POR QUE ESCOLHER O PATAFELIZ?
+═══════════════════════════════════════════════ -->
+<section class="diferenciais-section py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-titulo">Por que escolher o PataFeliz?</h2>
+    </div>
+    <div class="row g-4 align-items-center">
+      <div class="col-md-6">
+        <ul class="diferenciais-lista">
+          <li><span class="check">✔</span> Equipe veterinária com registro no CRMV</li>
+          <li><span class="check">✔</span> Ambiente limpo, seguro e monitorado 24h</li>
+          <li><span class="check">✔</span> Produtos hipoalergênicos e cruelty-free</li>
+          <li><span class="check">✔</span> Agendamento online pelo sistema</li>
+          <li><span class="check">✔</span> Atendimento personalizado para cada raça</li>
+          <li><span class="check">✔</span> Localização central com fácil acesso</li>
+        </ul>
+      </div>
+      <div class="col-md-6 text-center">
+        <div class="diferencial-ilustracao">
+          <span style="font-size:6rem;">🐶🐱🐰</span>
+          <p class="mt-3 text-muted">Atendemos cães, gatos, coelhos e outros pequenos animais!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     CTA FINAL
+═══════════════════════════════════════════════ -->
+<section class="cta-section py-5 text-center">
+  <div class="container">
+    <h2 class="cta-titulo mb-3">Pronto para cuidar do seu pet?</h2>
+    <p class="cta-subtitulo mb-4">Crie sua conta gratuitamente e acesse o sistema de agendamentos.</p>
+    <a href="{{ url_for('cadastro') }}" class="btn btn-laranja btn-lg px-5">
+      <i class="bi bi-heart-fill me-2"></i>Começar Agora
+    </a>
+  </div>
+</section>
+
+{% endblock %}

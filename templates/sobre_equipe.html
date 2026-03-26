@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nossa Equipe — PataFeliz</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Estilo exclusivo da página da equipe ── */
+    :root {
+      --laranja: #FF7A00;
+      --laranja-claro: #FFF3E0;
+      --verde-pet: #4CAF50;
+      --roxo-pet: #7C3AED;
+      --azul-pet: #2196F3;
+      --rosa-pet: #E91E8C;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #FFF9F0 0%, #FFF3E0 50%, #F3E5F5 100%);
+      min-height: 100vh;
+    }
+
+    /* Cabeçalho da página */
+    .equipe-header {
+      background: linear-gradient(135deg, var(--laranja), #FF9800);
+      color: white;
+      padding: 3rem 0 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .equipe-header::before {
+      content: '🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾';
+      position: absolute;
+      font-size: 3rem;
+      opacity: 0.08;
+      top: 10px; left: -20px;
+      letter-spacing: 10px;
+    }
+    .equipe-header h1 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+    }
+    .equipe-header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* Cards dos integrantes */
+    .membro-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-top: 5px solid var(--laranja);
+      height: 100%;
+    }
+    .membro-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px rgba(255,122,0,0.15);
+    }
+    .membro-card:nth-child(2) { border-top-color: var(--verde-pet); }
+    .membro-card:nth-child(3) { border-top-color: var(--roxo-pet); }
+    .membro-card:nth-child(4) { border-top-color: var(--azul-pet); }
+
+    /* Avatar do membro */
+    .membro-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      object-fit: cover;
+      border: 4px solid var(--laranja-claro);
+      font-size: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--laranja-claro);
+    }
+
+    /* Nome e papel do membro */
+    .membro-nome {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 0.25rem;
+    }
+    .membro-papel {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--laranja);
+      margin-bottom: 0.75rem;
+    }
+    .membro-email {
+      font-size: 0.85rem;
+      color: #6c757d;
+      margin-bottom: 1rem;
+    }
+    .membro-email a {
+      color: var(--laranja);
+      text-decoration: none;
+    }
+    .membro-bio {
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.6;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 1rem;
+      margin-top: 0.5rem;
+      text-align: left;
+    }
+
+    /* Seção de tecnologias */
+    .tech-section {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .tech-badge {
+      display: inline-block;
+      background: var(--laranja-claro);
+      color: var(--laranja);
+      border: 1px solid #FFE0B2;
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin: 4px;
+    }
+
+    /* Rodapé */
+    .equipe-footer {
+      background: #1a1a1a;
+      color: #aaa;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.85rem;
+    }
+    .equipe-footer strong { color: var(--laranja); }
+
+    /* Botão de voltar */
+    .btn-voltar {
+      background: white;
+      color: var(--laranja);
+      border: 2px solid var(--laranja);
+      border-radius: 50px;
+      padding: 8px 24px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-voltar:hover {
+      background: var(--laranja);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header class="equipe-header">
+    <div class="container">
+      <p class="mb-2" style="font-size:2rem;">👩‍💻👨‍💻</p>
+      <h1>Nossa Equipe</h1>
+      <p>As pessoas por trás do <strong>PataFeliz PetShop</strong></p>
+      <a href="/usuarios/listar" class="btn-voltar mt-3 d-inline-block">
+        <i class="bi bi-arrow-left me-1"></i>Voltar ao início
+      </a>
+    </div>
+  </header>
+
+  <!-- Cards dos integrantes -->
+  <main class="container py-5">
+    <div class="row g-4 justify-content-center">
+
+      <!-- ── Membro 1 ──────────────────────── -->
+      <div class="col-md-6 col-lg-3">
+        <div class="membro-card">
+          <div class="membro-avatar">👩</div>
+          <div class="membro-nome">Ana Paula Silva</div>
+          <div class="membro-papel">Desenvolvedora Full Stack</div>
+          <div class="membro-email">
+            <i class="bi bi-envelope me-1"></i>
+            <a href="/cdn-cgi/l/email-protection#19787778376a70756f785978756c77766a377f787a6c757d787d7c377c7d6c377b6b"><span class="__cf_email__" data-cfemail="e2838c83cc918b8e9483a2838e978c8d91cc878697cc8090">[email&#160;protected]</span></a>
+          </div>
+          <p class="membro-bio">
+            Cursando Sistemas de Informação no 3º semestre. Apaixonada por back-end com Python e Flask.
+            Nas horas vagas adora criar APIs REST e jogar xadrez online.
+            Tem dois gatos chamados Biscoito e Farofa. 🐱
+          </p>
+        </div>
+      </div>
+
+      <!-- ── Membro 2 ──────────────────────── -->
+      <div class="col-md-6 col-lg-3">
+        <div class="membro-card">
+          <div class="membro-avatar" style="background:#E8F5E9;">👨</div>
+          <div class="membro-nome">Bruno Costa</div>
+          <div class="membro-papel" style="color: var(--verde-pet);">Desenvolvedor Front-end</div>
+          <div class="membro-email">
+            <i class="bi bi-envelope me-1"></i>
+            <a href="/cdn-cgi/l/email-protection#046676716a6b2a676b777065446568716a6b772a6265677168606560612a6160712a6676"><span class="__cf_email__" data-cfemail="d7b5a5a2b9b8f9b4b8a4a3b697b6bba2b9b8a4f9b2b3a2f9b5a5">[email&#160;protected]</span></a>
+          </div>
+          <p class="membro-bio">
+            Estudante de Análise e Desenvolvimento de Sistemas. Especialista em HTML, CSS e Bootstrap.
+            Obcecado por pixels perfeitos e tipografia bonita.
+            Tem um cachorrão Golden Retriever chamado Bolão. 🐶
+          </p>
+        </div>
+      </div>
+
+      <!-- ── Membro 3 ──────────────────────── -->
+      <div class="col-md-6 col-lg-3">
+        <div class="membro-card">
+          <div class="membro-avatar" style="background:#EDE7F6;">👩‍💻</div>
+          <div class="membro-nome">Carla Rodrigues</div>
+          <div class="membro-papel" style="color: var(--roxo-pet);">Desenvolvedora & Designer</div>
+          <div class="membro-email">
+            <i class="bi bi-envelope me-1"></i>
+            <a href="/cdn-cgi/l/email-protection#ef8c8e9d838ec19d808b9d86889a8a9caf8e839a81809cc1898e8c9a838b8e8b8ac18a8b9ac18d9d"><span class="__cf_email__" data-cfemail="1a797b68767b3468757e68737d6f7f695a7b766f747569347f7e6f347868">[email&#160;protected]</span></a>
+          </div>
+          <p class="membro-bio">
+            Cursando Design Digital com ênfase em UX/UI. Responsável pela identidade visual do PataFeliz.
+            Ama criar interfaces acessíveis e agradáveis.
+            Voluntária em ONG de proteção animal. 🐾
+          </p>
+        </div>
+      </div>
+
+      <!-- ── Membro 4 ──────────────────────── -->
+      <div class="col-md-6 col-lg-3">
+        <div class="membro-card">
+          <div class="membro-avatar" style="background:#E3F2FD;">🧑‍💻</div>
+          <div class="membro-nome">Diego Mendes</div>
+          <div class="membro-papel" style="color: var(--azul-pet);">Dev Back-end & Banco de Dados</div>
+          <div class="membro-email">
+            <i class="bi bi-envelope me-1"></i>
+            <a href="/cdn-cgi/l/email-protection#c6a2afa3a1a9e8aba3a8a2a3b586a7aab3a8a9b5e8a0a7a5b3aaa2a7a2a3e8a3a2b3e8a4b4"><span class="__cf_email__" data-cfemail="ff9b969a9890d1929a919b9a8cbf9e938a91908cd19a9b8ad19d8d">[email&#160;protected]</span></a>
+          </div>
+          <p class="membro-bio">
+            Estudante de Engenharia de Software focado em modelagem de dados e Python.
+            Criou a estrutura de rotas e dados do sistema.
+            Fã de churrasco, programação e do seu coelho Pipoca. 🐰
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tecnologias utilizadas -->
+    <div class="tech-section mt-5">
+      <h4 class="text-center mb-4" style="font-family:'Fredoka',sans-serif; color:#1a1a1a;">
+        🛠️ Tecnologias Utilizadas
+      </h4>
+      <div class="text-center">
+        <span class="tech-badge">🐍 Python 3.12</span>
+        <span class="tech-badge">⚗️ Flask 3.0</span>
+        <span class="tech-badge">🎨 Bootstrap 5</span>
+        <span class="tech-badge">🌐 HTML5 + CSS3</span>
+        <span class="tech-badge">⚡ JavaScript E

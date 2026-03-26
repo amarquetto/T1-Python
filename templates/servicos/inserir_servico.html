@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block titulo %}Novo Serviço — PataFeliz{% endblock %}
+
+{% block conteudo %}
+
+<div class="mb-4">
+  <h1 class="pagina-titulo mb-1">
+    <i class="bi bi-scissors me-2 text-laranja"></i>Cadastrar Novo Serviço
+  </h1>
+  <p class="text-muted small mb-0">Adicione um novo serviço ao catálogo do PataFeliz</p>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-4">
+
+        <!-- Formulário de cadastro de serviço -->
+        <form method="POST" action="{{ url_for('inserir_servico') }}" novalidate>
+
+          <!-- Campo: Nome do serviço -->
+          <div class="mb-3">
+            <label for="nome" class="form-label">
+              Nome do serviço <span class="texto-obrigatorio">*</span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="nome"
+              name="nome"
+              placeholder="Ex.: Banho e Tosa Completa"
+              required
+              maxlength="100"
+            />
+          </div>
+
+          <!-- Campo: Categoria -->
+          <div class="mb-3">
+            <label for="categoria" class="form-label">
+              Categoria <span class="texto-obrigatorio">*</span>
+            </label>
+            <select class="form-select" id="categoria" name="categoria" required>
+              <option value="" disabled selected>Selecione uma categoria...</option>
+              <option value="Estética">✂️ Estética — banho, tosa, hidratação</option>
+              <option value="Saúde">🩺 Saúde — consultas, vacinas, exames</option>
+              <option value="Hospedagem">🏠 Hospedagem — hotel e day care</option>
+              <option value="Treinamento">🎓 Treinamento — adestramento e comportamento</option>
+              <option value="Nutrição">🥗 Nutrição — orientação alimentar</option>
+            </select>
+          </div>
+
+          <!-- Campo: Preço -->
+          <div class="mb-3">
+            <label for="preco" class="form-label">
+              Preço (R$) <span class="texto-obrigatorio">*</span>
+            </label>
+            <div class="input-group">
+              <span class="input-group-text">R$</span>
+              <input
+                type="number"
+                step="0.01"
+                class="form-control"
+                id="preco"
+                name="preco"
+                placeholder="0,00"
+                required
+                min="0"
+              />
+            </div>
+            <div class="form-text">Valor base do serviço. Pode variar conforme o porte do animal.</div>
+          </div>
+
+          <!-- Campo: Duração estimada -->
+          <div class="mb-3">
+            <label for="duracao" class="form-label">
+              Duração estimada <span class="texto-obrigatorio">*</span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="duracao"
+              name="duracao"
+              placeholder="Ex.: 2h, 45min, diária"
+              required
+              maxlength="20"
+            />
+          </div>
+
+          <!-- Campo: Disponível -->
+          <div class="mb-3">
+            <label for="disponivel" class="form-label">Disponibilidade</label>
+            <select class="form-select" id="disponivel" name="disponivel">
+              <option value="Sim" selected>✅ Disponível para agendamento</option>
+              <option value="Não">❌ Temporariamente indisponível</option>
+            </select>
+          </div>
+
+          <!-- Campo: Descrição detalhada -->
+          <div class="mb-4">
+            <label for="descricao" class="form-label">Descrição detalhada</label>
+            <textarea
+              class="form-control"
+              id="descricao"
+              name="descricao"
+              rows="3"
+              placeholder="Descreva o que está incluído no serviço, restrições, etc."
+              maxlength="500"
+            ></textarea>
+          </div>
+
+          <!-- Botões de ação -->
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-laranja px-4">
+              <i class="bi bi-check-lg me-1"></i>Salvar Serviço
+            </button>
+            <a href="{{ url_for('listar_servicos') }}" class="btn btn-outline-secondary px-4">
+              <i class="bi bi-x-lg me-1"></i>Cancelar
+            </a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

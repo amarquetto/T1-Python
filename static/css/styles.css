@@ -1,0 +1,438 @@
+/* ════════════════════════════════════════════════════════
+   styles.css — CSS personalizado do PataFeliz PetShop
+   Identidade visual: laranja vibrante + branco + tons de pet
+════════════════════════════════════════════════════════ */
+
+/* ── Variáveis de design (tokens) ───────────────────── */
+:root {
+  --laranja:        #FF7A00;
+  --laranja-hover:  #E56E00;
+  --laranja-claro:  #FFF3E0;
+  --laranja-borda:  #FFE0B2;
+  --texto-escuro:   #1a1a1a;
+  --texto-medio:    #4a4a4a;
+  --texto-claro:    #888;
+  --fundo-claro:    #FAFAFA;
+  --fundo-sistema:  #F5F7FA;
+  --sombra-suave:   0 4px 20px rgba(255, 122, 0, 0.08);
+  --raio:           12px;
+  --fonte-display:  'Fredoka', sans-serif;
+  --fonte-corpo:    'Nunito', sans-serif;
+}
+
+/* ── Reset e base global ─────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--fonte-corpo);
+  color: var(--texto-escuro);
+}
+
+/* ══════════════════════════════════════════════════════
+   PÁGINAS PÚBLICAS (login, cadastro, index)
+══════════════════════════════════════════════════════ */
+
+/* Fundo das páginas públicas com textura sutil */
+.publica-body {
+  background-color: var(--laranja-claro);
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,122,0,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255,152,0,0.06) 0%, transparent 50%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar das páginas públicas */
+.navbar-publica {
+  background: white;
+  border-bottom: 2px solid var(--laranja-claro);
+  padding: 0.75rem 0;
+}
+
+/* ── Logo da marca ───────────────────────────────────── */
+.brand-logo {
+  font-family: var(--fonte-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--laranja) !important;
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+.paw-icon {
+  display: inline-block;
+  animation: paw-bounce 2s ease-in-out infinite;
+}
+@keyframes paw-bounce {
+  0%, 100% { transform: rotate(0deg); }
+  25%       { transform: rotate(-10deg) scale(1.1); }
+  75%       { transform: rotate(10deg) scale(1.1); }
+}
+
+/* ── Botões customizados ─────────────────────────────── */
+.btn-laranja {
+  background-color: var(--laranja);
+  border-color: var(--laranja);
+  color: white;
+  font-weight: 700;
+  border-radius: 50px;
+  transition: all 0.2s ease;
+}
+.btn-laranja:hover, .btn-laranja:focus {
+  background-color: var(--laranja-hover);
+  border-color: var(--laranja-hover);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255,122,0,0.35);
+}
+
+.btn-outline-laranja {
+  border-color: var(--laranja);
+  color: var(--laranja);
+  font-weight: 700;
+  border-radius: 50px;
+  transition: all 0.2s ease;
+}
+.btn-outline-laranja:hover {
+  background-color: var(--laranja);
+  border-color: var(--laranja);
+  color: white;
+}
+
+/* Link laranja para textos */
+.link-laranja {
+  color: var(--laranja);
+  font-weight: 600;
+  text-decoration: none;
+}
+.link-laranja:hover {
+  color: var(--laranja-hover);
+  text-decoration: underline;
+}
+
+/* ── Card de autenticação (login / cadastro) ──────────── */
+.auth-card {
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 8px 40px rgba(255,122,0,0.12);
+  border-top: 4px solid var(--laranja);
+}
+
+.auth-icone {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.auth-titulo {
+  font-family: var(--fonte-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--texto-escuro);
+}
+
+/* ── Campos obrigatórios ─────────────────────────────── */
+.texto-obrigatorio {
+  color: var(--laranja);
+  font-weight: 800;
+}
+
+/* Focus nos inputs na cor laranja */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--laranja);
+  box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.15);
+}
+
+/* ══════════════════════════════════════════════════════
+   PÁGINA INICIAL (/)
+══════════════════════════════════════════════════════ */
+
+/* Seção hero */
+.hero-section {
+  background: linear-gradient(135deg, #fff 0%, var(--laranja-claro) 100%);
+  padding: 5rem 0;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: var(--laranja-claro);
+  color: var(--laranja);
+  border: 1px solid var(--laranja-borda);
+  border-radius: 50px;
+  padding: 6px 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.hero-titulo {
+  font-family: var(--fonte-display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--texto-escuro);
+}
+
+.destaque-laranja {
+  color: var(--laranja);
+}
+
+.hero-subtitulo {
+  font-size: 1.1rem;
+  color: var(--texto-medio);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Seção de números */
+.numeros-section {
+  background: var(--laranja);
+  color: white;
+}
+
+.numero-card {
+  padding: 1rem;
+}
+
+.numero-valor {
+  font-family: var(--fonte-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.numero-label {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  margin-top: 0.25rem;
+}
+
+/* Cards de serviços */
+.servicos-section {
+  background: var(--fundo-claro);
+}
+
+.section-titulo {
+  font-family: var(--fonte-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--texto-escuro);
+}
+
+.section-subtitulo {
+  color: var(--texto-claro);
+  font-size: 1.05rem;
+}
+
+.servico-card {
+  background: white;
+  border-radius: var(--raio);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  box-shadow: var(--sombra-suave);
+  border: 1px solid var(--laranja-borda);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.servico-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(255,122,0,0.18);
+}
+
+.servico-card.destaque {
+  border: 2px solid var(--laranja);
+  position: relative;
+}
+
+.servico-card.destaque::before {
+  content: '⭐ Mais popular';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--laranja);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 16px;
+  border-radius: 50px;
+  white-space: nowrap;
+}
+
+.servico-icone {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.servico-nome {
+  font-family: var(--fonte-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--texto-escuro);
+  margin-bottom: 0.5rem;
+}
+
+.servico-desc {
+  font-size: 0.9rem;
+  color: var(--texto-claro);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.servico-preco {
+  font-weight: 700;
+  color: var(--laranja);
+  font-size: 0.95rem;
+}
+
+/* Seção de diferenciais */
+.diferenciais-section {
+  background: white;
+}
+
+.diferenciais-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.diferenciais-lista li {
+  padding: 0.6rem 0;
+  font-size: 1rem;
+  border-bottom: 1px solid var(--laranja-claro);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.check {
+  color: var(--laranja);
+  font-weight: 900;
+  font-size: 1.1rem;
+}
+
+/* CTA final */
+.cta-section {
+  background: linear-gradient(135deg, var(--laranja), #FF9800);
+  color: white;
+}
+
+.cta-titulo {
+  font-family: var(--fonte-display);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.cta-subtitulo {
+  font-size: 1.05rem;
+  opacity: 0.9;
+}
+
+/* Rodapé das páginas públicas */
+.footer-publica {
+  background: #1a1a1a;
+  color: #aaa;
+  margin-top: auto;
+  font-size: 0.9rem;
+}
+
+/* ══════════════════════════════════════════════════════
+   SISTEMA (páginas após o login)
+══════════════════════════════════════════════════════ */
+
+/* Fundo do sistema */
+.sistema-body {
+  background-color: var(--fundo-sistema);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar do sistema */
+.navbar-sistema {
+  background: white;
+  border-bottom: 3px solid var(--laranja);
+  padding: 0.6rem 0;
+}
+
+/* Links da navbar do sistema */
+.nav-link-sistema {
+  color: var(--texto-medio) !important;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.4rem 0.9rem !important;
+  transition: all 0.2s;
+}
+
+.nav-link-sistema:hover,
+.nav-link-sistema.active {
+  background: var(--laranja-claro);
+  color: var(--laranja) !important;
+}
+
+/* Títulos de página */
+.pagina-titulo {
+  font-family: var(--fonte-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--texto-escuro);
+}
+
+/* Cor de destaque nas listagens */
+.text-laranja {
+  color: var(--laranja) !important;
+}
+
+/* Cabeçalho das tabelas */
+.thead-laranja th {
+  background-color: var(--laranja);
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-color: var(--laranja-hover) !important;
+}
+
+/* Badge rosa para estética */
+.badge.bg-pink {
+  background-color: #E91E8C !important;
+  color: white;
+}
+
+/* Rodapé do sistema */
+.footer-sistema {
+  background: white;
+  border-top: 2px solid var(--laranja-claro);
+  color: var(--texto-claro);
+  margin-top: auto;
+}
+
+/* ── Animação de entrada das páginas ─────────────────── */
+main {
+  animation: fadeInUp 0.4s ease both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Responsividade extra ────────────────────────────── */
+@media (max-width: 768px) {
+  .hero-titulo {
+    font-size: 1.8rem;
+  }
+  .auth-card {
+    padding: 1.75rem 1.25rem;
+  }
+}

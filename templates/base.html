@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block titulo %}PataFeliz — Sistema{% endblock %}</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+<body class="sistema-body">
+
+  <!-- ── Navbar principal do sistema ───────────────────── -->
+  <nav class="navbar navbar-expand-lg navbar-sistema shadow-sm">
+    <div class="container-fluid px-4">
+
+      <!-- Logo / nome do sistema -->
+      <a class="navbar-brand brand-logo" href="{{ url_for('index') }}">
+        <span class="paw-icon">🐾</span> PataFeliz
+      </a>
+
+      <!-- Botão hambúrguer para telas pequenas -->
+      <button class="navbar-toggler" type="button"
+              data-bs-toggle="collapse" data-bs-target="#navbarMenu"
+              aria-controls="navbarMenu" aria-expanded="false"
+              aria-label="Abrir menu de navegação">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Links de navegação -->
+      <div class="collapse navbar-collapse" id="navbarMenu">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-1">
+
+          <li class="nav-item">
+            <a class="nav-link nav-link-sistema {% if request.path.startswith('/usuarios') %}active{% endif %}"
+               href="{{ url_for('listar_usuarios') }}">
+              <i class="bi bi-people-fill me-1"></i>Usuários
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link nav-link-sistema {% if request.path.startswith('/pets') %}active{% endif %}"
+               href="{{ url_for('listar_pets') }}">
+              <i class="bi bi-heart-fill me-1"></i>Pets
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link nav-link-sistema {% if request.path.startswith('/servicos') %}active{% endif %}"
+               href="{{ url_for('listar_servicos') }}">
+              <i class="bi bi-scissors me-1"></i>Serviços
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link nav-link-sistema {% if request.path == '/equipe' %}active{% endif %}"
+               href="{{ url_for('equipe') }}">
+              <i class="bi bi-people me-1"></i>Equipe
+            </a>
+          </li>
+
+        </ul>
+
+        <!-- Usuário logado + logout -->
+        <div class="d-flex align-items-center gap-3">
+          <span class="navbar-text text-muted small">
+            <i class="bi bi-person-circle me-1"></i>
+            Olá, <strong>{{ session.get('nome', 'Usuário') }}</strong>
+          </span>
+          <a href="{{ url_for('logout') }}" class="btn btn-outline-danger btn-sm">
+            <i class="bi bi-box-arrow-right me-1"></i>Sair
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- ── Flash messages ─────────────────────────────────── -->
+  <div class="container-fluid px-4 mt-3">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for categoria, msg in messages %}
+          <div class="alert alert-{{ categoria }} alert-dismissible fade show shadow-sm" role="alert">
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <!-- ── Conteúdo da página ─────────────────────────────── -->
+  <main class="container-fluid px-4 py-4">
+    {% block conteudo %}{% endblock %}
+  </main>
+
+  <!-- ── Rodapé do sistema ──────────────────────────────── -->
+  <footer class="footer-sistema py-3 text-center mt-auto">
+    <p class="mb-0 small">
+      🐾 <strong>PataFeliz PetShop</strong> &copy; 2024 &nbsp;&mdash;&nbsp;
+      Sistema desenvolvido pela <strong>Equipe PataFeliz</strong>
+    </p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>

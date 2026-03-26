@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block titulo %}Pets — PataFeliz{% endblock %}
+
+{% block conteudo %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="pagina-titulo mb-1">
+      <i class="bi bi-heart-fill me-2 text-laranja"></i>Pets Cadastrados
+    </h1>
+    <p class="text-muted small mb-0">Visualize e gerencie os pets atendidos pelo PataFeliz</p>
+  </div>
+  <a href="{{ url_for('inserir_pet') }}" class="btn btn-laranja">
+    <i class="bi bi-plus-lg me-1"></i>Novo Pet
+  </a>
+</div>
+
+<div class="card shadow-sm border-0">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered align-middle mb-0">
+        <thead class="thead-laranja">
+          <tr>
+            <th>#</th>
+            <th><i class="bi bi-tag me-1"></i>Nome do Pet</th>
+            <th><i class="bi bi-search me-1"></i>Espécie</th>
+            <th>Raça</th>
+            <th><i class="bi bi-calendar me-1"></i>Idade</th>
+            <th><i class="bi bi-person me-1"></i>Tutor</th>
+            <th>Peso</th>
+            <th class="text-center">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in pets %}
+          <tr>
+            <td class="text-muted small">{{ p.id }}</td>
+            <td>
+              <!-- Ícone de acordo com a espécie -->
+              {% if p.especie == 'Cão' %}🐶
+              {% elif p.especie == 'Gato' %}🐱
+              {% elif p.especie == 'Coelho' %}🐰
+              {% else %}🐾{% endif %}
+              <strong>{{ p.nome }}</strong>
+            </td>
+            <td>
+              <span class="badge bg-info text-dark">{{ p.especie }}</span>
+            </td>
+            <td>{{ p.raca }}</td>
+            <td>{{ p.idade }} ano{% if p.idade != 1 %}s{% endif %}</td>
+            <td>{{ p.tutor }}</td>
+            <td>{{ p.peso }}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-primary me-1" title="Editar pet">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger"
+                      onclick="confirmarExclusao('{{ p.nome }}')"
+                      title="Excluir pet">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer text-muted small">
+    Total de pets: <strong>{{ pets|length }}</strong>
+  </div>
+</div>
+
+{% endblock %}
