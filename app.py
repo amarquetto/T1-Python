@@ -63,7 +63,7 @@ def login():
         email = request.form.get('email', '').strip()
         senha = request.form.get('senha', '').strip()
 
-        # Verificação simples: qualquer e-mail + senha '1234' loga no sistema
+        # Verificação simples: qualquer e-mail + senha '123456' loga no sistema
         if email and senha == '123456':
             session['usuario'] = email
             session['nome'] = email.split('@')[0].capitalize()
