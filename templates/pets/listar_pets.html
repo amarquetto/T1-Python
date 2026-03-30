@@ -43,9 +43,13 @@
               {% else %}🐾{% endif %}
               <strong>{{ p.nome }}</strong>
             </td>
-            <td>
+            <td
+              \>
+              <!-- tipo de etiqueta do Bootstrap deixa o nome da espécie em azul claro-->
               <span class="badge bg-info text-dark">{{ p.especie }}</span>
-            </td>
+            </td
+            \>
+            <!-- Se idade = 1 ano, mostra 1 ano. Senão mostra 2 anos/ 3 anos e assim por diante-->
             <td>{{ p.raca }}</td>
             <td>{{ p.idade }} ano{% if p.idade != 1 %}s{% endif %}</td>
             <td>{{ p.tutor }}</td>
