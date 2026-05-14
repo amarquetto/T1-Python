@@ -48,8 +48,9 @@
             </td>
             <td class="small">{{ fn.descricao }}</td>
             <td class="small">
-              {% if fn.permissoes %}
-                {% for key in fn.permissoes %}
+              {% set perms = fn.permissoes or [] %}
+              {% if perms %}
+                {% for key in perms %}
                   {% for c in permissoes_catalogo %}
                     {% if c.key == key %}
                     <span class="badge bg-light text-dark border me-1 mb-1">{{ c.label }}</span>
