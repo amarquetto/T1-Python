@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block titulo %}Editar pet — PataFeliz{% endblock %}
+
+{% block conteudo %}
+{% set peso_num = '' %}
+{% if pet.peso and pet.peso.endswith(' kg') %}
+  {% set peso_num = pet.peso[:-3] %}
+{% elif pet.peso != '—' %}
+  {% set peso_num = pet.peso %}
+{% endif %}
+
+<div class="mb-4">
+  <h1 class="pagina-titulo mb-1">
+    <i class="bi bi-pencil-square me-2 text-laranja"></i>Editar pet
+  </h1>
+  <p class="text-muted small mb-0">Atualize os dados do pet <strong>{{ pet.nome }}</strong>.</p>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-lg-7">
+    <div class="card shadow-sm border-0 card-faixa-laranja">
+      <div class="card-body p-4">
+        <form method="POST" action="{{ url_for('editar_pet', id=pet.id) }}" novalidate>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="nome" class="form-label">Nome do pet <span class="texto-obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="nome" name="nome" value="{{ pet.nome }}" required maxlength="50" />
+            </div>
+            <div class="col-md-6">
+              <label for="especie" class="form-label">Espécie <span class="texto-obrigatorio">*</span></label>
+              <select class="form-select" id="especie" name="especie" required>
+                {% for esp in ['Cão', 'Gato', 'Coelho', 'Pássaro', 'Hamster', 'Outro'] %}
+                <option value="{{ esp }}" {% if pet.especie == esp %}selected{% endif %}>{{ esp }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="raca" class="form-label">Raça</label>
+              <input type="text" class="form-control" id="raca" name="raca" value="{{ pet.raca }}" maxlength="60" />
+            </div>
+            <div class="col-md-3">
+              <label for="idade" class="form-label">Idade (anos) <span class="texto-obrigatorio">*</span></label>
+              <input type="number" class="form-control" id="idade" name="idade" value="{{ pet.idade }}" required min="0" max="30" />
+            </div>
+            <div class="col-md-3">
+              <label for="peso" class="form-label">Peso (kg)</label>
+              <input type="number" step="0.1" class="form-control" id="peso" name="peso" value="{{ peso_num }}" min="0" />
+            </div>
+            <div class="col-12">
+              <label for="tutor" class="form-label">Nome do tutor <span class="texto-obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="tutor" name="tutor" value="{{ pet.tutor }}" required maxlength="100" />
+            </div>
+          </div>
+          <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-laranja px-4"><i class="bi bi-check-lg me-1"></i>Salvar alterações</button>
+            <a href="{{ url_for('listar_pets') }}" class="btn btn-outline-secondary px-4">Cancelar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

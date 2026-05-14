@@ -3,20 +3,6 @@
 from extensions import db
 
 
-class Usuario(db.Model):
-    __tablename__ = "usuarios"
-
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(120), nullable=False)
-    email = db.Column(db.String(180), nullable=False, unique=True, index=True)
-    perfil = db.Column(db.String(80), nullable=False)
-    ativo = db.Column(db.String(3), nullable=False, default="Sim")  # Sim / Não
-    senha_hash = db.Column(db.String(255), nullable=False)
-
-    def __repr__(self):
-        return f"<Usuario {self.email}>"
-
-
 class Funcao(db.Model):
     __tablename__ = "funcoes"
 
@@ -24,11 +10,28 @@ class Funcao(db.Model):
     nome = db.Column(db.String(120), nullable=False)
     status = db.Column(db.String(20), nullable=False)  # ativo / inativo
     descricao = db.Column(db.Text, nullable=False)
-    # Lista de chaves de permissão, ex.: ["dashboard", "gerenciar_pets"]
     permissoes = db.Column(db.JSON, nullable=False, default=list)
 
     def __repr__(self):
         return f"<Funcao {self.nome}>"
+
+
+class Usuario(db.Model):
+    __tablename__ = "usuarios"
+
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(120), nullable=False)
+    email = db.Column(db.String(180), nullable=False, unique=True, index=True)
+    # Mantido sincronizado com o nome da função vinculada (exibição / legado)
+    perfil = db.Column(db.String(80), nullable=False)
+    ativo = db.Column(db.String(3), nullable=False, default="Sim")
+    senha_hash = db.Column(db.String(255), nullable=False)
+    funcao_id = db.Column(db.Integer, db.ForeignKey("funcoes.id"), nullable=True)
+
+    funcao = db.relationship("Funcao", backref="usuarios", lazy="joined")
+
+    def __repr__(self):
+        return f"<Usuario {self.email}>"
 
 
 class Pet(db.Model):

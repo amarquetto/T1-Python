@@ -3,16 +3,18 @@
 
 {% block conteudo %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
   <div>
     <h1 class="pagina-titulo mb-1">
       <i class="bi bi-scissors me-2 text-laranja"></i>Serviços Oferecidos
     </h1>
     <p class="text-muted small mb-0">Gerencie o catálogo de serviços do PataFeliz</p>
   </div>
+  {% if pode('gerenciar_servicos') %}
   <a href="{{ url_for('inserir_servico') }}" class="btn btn-laranja">
     <i class="bi bi-plus-lg me-1"></i>Novo Serviço
   </a>
+  {% endif %}
 </div>
 
 <div class="card shadow-sm border-0">
@@ -36,7 +38,6 @@
             <td class="text-muted small">{{ s.id }}</td>
             <td><strong>{{ s.nome }}</strong></td>
             <td>
-              <!-- Cor do badge de acordo com a categoria -->
               {% if s.categoria == 'Saúde' %}
                 <span class="badge bg-danger">{{ s.categoria }}</span>
               {% elif s.categoria == 'Estética' %}
@@ -59,14 +60,15 @@
               {% endif %}
             </td>
             <td class="text-center">
-              <button class="btn btn-sm btn-outline-primary me-1" title="Editar serviço">
+              <a href="{{ url_for('editar_servico', id=s.id) }}" class="btn btn-sm btn-outline-primary me-1" title="Editar serviço">
                 <i class="bi bi-pencil"></i>
-              </button>
-              <button class="btn btn-sm btn-outline-danger"
-                      onclick="confirmarExclusao('{{ s.nome }}')"
-                      title="Excluir serviço">
-                <i class="bi bi-trash"></i>
-              </button>
+              </a>
+              <form method="post" action="{{ url_for('excluir_servico', id=s.id) }}" class="d-inline"
+                    onsubmit="return confirmarExclusaoSubmit(event, '{{ s.nome|e }}')">
+                <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir serviço">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
             </td>
           </tr>
           {% endfor %}

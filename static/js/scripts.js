@@ -14,13 +14,18 @@
    Exibe caixa de confirmação nativa do navegador.
 ───────────────────────────────────────────────────── */
 function confirmarExclusao(nomeItem) {
-  const confirmado = window.confirm(
+  return window.confirm(
     `⚠️ Deseja realmente excluir "${nomeItem}"?\n\nEsta ação não poderá ser desfeita.`
   );
-  if (confirmado) {
-    // Aqui seria disparada a requisição de exclusão (implementar na próxima entrega)
-    alert(`"${nomeItem}" excluído com sucesso.`);
+}
+
+/** Uso: <form onsubmit="return confirmarExclusaoSubmit(event, 'Nome')"> — envia POST ao Flask se confirmar. */
+function confirmarExclusaoSubmit(event, nomeItem) {
+  if (!confirmarExclusao(nomeItem)) {
+    event.preventDefault();
+    return false;
   }
+  return true;
 }
 
 /* ─────────────────────────────────────────────────────

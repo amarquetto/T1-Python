@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block titulo %}Editar serviço — PataFeliz{% endblock %}
+
+{% block conteudo %}
+
+<div class="mb-4">
+  <h1 class="pagina-titulo mb-1">
+    <i class="bi bi-pencil-square me-2 text-laranja"></i>Editar serviço
+  </h1>
+  <p class="text-muted small mb-0">Atualize o serviço <strong>{{ serv.nome }}</strong>.</p>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-sm border-0 card-faixa-laranja">
+      <div class="card-body p-4">
+        <form method="POST" action="{{ url_for('editar_servico', id=serv.id) }}" novalidate>
+          <div class="mb-3">
+            <label for="nome" class="form-label">Nome do serviço <span class="texto-obrigatorio">*</span></label>
+            <input type="text" class="form-control" id="nome" name="nome" value="{{ serv.nome }}" required maxlength="100" />
+          </div>
+          <div class="mb-3">
+            <label for="categoria" class="form-label">Categoria <span class="texto-obrigatorio">*</span></label>
+            <select class="form-select" id="categoria" name="categoria" required>
+              {% for cat in ['Estética', 'Saúde', 'Hospedagem', 'Treinamento', 'Nutrição'] %}
+              <option value="{{ cat }}" {% if serv.categoria == cat %}selected{% endif %}>{{ cat }}</option>
+              {% endfor %}
+              {% if serv.categoria not in ['Estética', 'Saúde', 'Hospedagem', 'Treinamento', 'Nutrição'] %}
+              <option value="{{ serv.categoria }}" selected>{{ serv.categoria }}</option>
+              {% endif %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="preco" class="form-label">Preço (R$) <span class="texto-obrigatorio">*</span></label>
+            <div class="input-group">
+              <span class="input-group-text">R$</span>
+              <input type="number" step="0.01" class="form-control" id="preco" name="preco" value="{{ preco_editavel }}" required min="0" />
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="duracao" class="form-label">Duração estimada <span class="texto-obrigatorio">*</span></label>
+            <input type="text" class="form-control" id="duracao" name="duracao" value="{{ serv.duracao }}" required maxlength="20" />
+          </div>
+          <div class="mb-4">
+            <label for="disponivel" class="form-label">Disponibilidade</label>
+            <select class="form-select" id="disponivel" name="disponivel">
+              <option value="Sim" {% if serv.disponivel == 'Sim' %}selected{% endif %}>Disponível</option>
+              <option value="Não" {% if serv.disponivel == 'Não' %}selected{% endif %}>Indisponível</option>
+            </select>
+          </div>
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-laranja px-4"><i class="bi bi-check-lg me-1"></i>Salvar</button>
+            <a href="{{ url_for('listar_servicos') }}" class="btn btn-outline-secondary px-4">Cancelar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

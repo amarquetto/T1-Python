@@ -3,7 +3,6 @@
 
 {% block conteudo %}
 
-<!-- Cabeçalho da seção -->
 <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3 mb-4">
   <div>
     <h1 class="pagina-titulo mb-1">
@@ -12,19 +11,22 @@
     <p class="text-muted small mb-0">Gerencie os usuários com acesso ao PataFeliz</p>
   </div>
   <div class="d-flex flex-wrap gap-2">
+    {% if pode('gerenciar_funcoes') %}
     <a href="{{ url_for('listar_funcoes') }}" class="btn btn-outline-laranja">
       <i class="bi bi-list-check me-1"></i>Funções cadastradas
     </a>
     <a href="{{ url_for('cadastrar_funcoes') }}" class="btn btn-outline-laranja">
       <i class="bi bi-shield-lock me-1"></i>Cadastrar funções
     </a>
+    {% endif %}
+    {% if pode('gerenciar_usuarios') %}
     <a href="{{ url_for('inserir_usuario') }}" class="btn btn-laranja">
       <i class="bi bi-plus-lg me-1"></i>Novo Usuário
     </a>
+    {% endif %}
   </div>
 </div>
 
-<!-- Tabela de usuários -->
 <div class="card shadow-sm border-0">
   <div class="card-body p-0">
     <div class="table-responsive">
@@ -34,24 +36,25 @@
             <th scope="col">#</th>
             <th scope="col"><i class="bi bi-person me-1"></i>Nome</th>
             <th scope="col"><i class="bi bi-envelope me-1"></i>E-mail</th>
-            <th scope="col"><i class="bi bi-shield me-1"></i>Perfil</th>
+            <th scope="col"><i class="bi bi-shield me-1"></i>Função</th>
             <th scope="col"><i class="bi bi-check-circle me-1"></i>Ativo</th>
             <th scope="col" class="text-center">Ações</th>
           </tr>
         </thead>
         <tbody>
           {% for u in usuarios %}
+          {% set fnome = u.funcao.nome if u.funcao else u.perfil %}
           <tr>
             <td class="text-muted small">{{ u.id }}</td>
             <td><strong>{{ u.nome }}</strong></td>
             <td>{{ u.email }}</td>
             <td>
-              {% if u.perfil == 'Administrador' %}
-                <span class="badge bg-danger">{{ u.perfil }}</span>
-              {% elif u.perfil == 'Veterinário' %}
-                <span class="badge bg-primary">{{ u.perfil }}</span>
+              {% if fnome == 'Administrador' %}
+                <span class="badge bg-danger">{{ fnome }}</span>
+              {% elif fnome == 'Veterinário' %}
+                <span class="badge bg-primary">{{ fnome }}</span>
               {% else %}
-                <span class="badge bg-secondary">{{ u.perfil }}</span>
+                <span class="badge bg-secondary">{{ fnome }}</span>
               {% endif %}
             </td>
             <td>
@@ -62,15 +65,21 @@
               {% endif %}
             </td>
             <td class="text-center">
-              
-              <button class="btn btn-sm btn-outline-primary me-1" title="Editar usuário">
+              <a href="{{ url_for('editar_usuario', id=u.id) }}" class="btn btn-sm btn-outline-primary me-1" title="Editar usuário">
                 <i class="bi bi-pencil"></i>
-              </button>
-              <button class="btn btn-sm btn-outline-danger"
-                      onclick="confirmarExclusao('{{ u.nome }}')"
-                      title="Excluir usuário">
+              </a>
+              {% if u.email != session.get('usuario') %}
+              <form method="post" action="{{ url_for('excluir_usuario', id=u.id) }}" class="d-inline"
+                    onsubmit="return confirmarExclusaoSubmit(event, '{{ u.nome|e }}')">
+                <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir usuário">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
+              {% else %}
+              <button type="button" class="btn btn-sm btn-outline-secondary" disabled title="Não é possível excluir o próprio usuário logado">
                 <i class="bi bi-trash"></i>
               </button>
+              {% endif %}
             </td>
           </tr>
           {% endfor %}

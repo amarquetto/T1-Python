@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block titulo %}Editar função — PataFeliz{% endblock %}
+
+{% block conteudo %}
+<div class="mb-4">
+  <h1 class="pagina-titulo mb-1">
+    <i class="bi bi-shield-lock-fill me-2 text-laranja"></i>Editar função
+  </h1>
+  <p class="text-muted small mb-0">Atualize nome, status, descrição e permissões de menu.</p>
+</div>
+
+{% set perms_atual = funcao_edit.permissoes or [] %}
+<div class="row">
+  <div class="col-lg-8">
+    <div class="card shadow-sm border-0 card-faixa-laranja">
+      <div class="card-body p-4">
+        <form method="POST" action="{{ url_for('editar_funcao', id=funcao_edit.id) }}" novalidate>
+
+          <div class="mb-3">
+            <label for="nome_funcao" class="form-label">Nome da função <span class="texto-obrigatorio">*</span></label>
+            <input type="text" class="form-control" id="nome_funcao" name="nome_funcao" value="{{ funcao_edit.nome }}" required maxlength="120" />
+          </div>
+
+          <div class="mb-3">
+            <label for="status_funcao" class="form-label">Status <span class="texto-obrigatorio">*</span></label>
+            <select class="form-select" id="status_funcao" name="status_funcao" required>
+              <option value="ativo" {% if funcao_edit.status == 'ativo' %}selected{% endif %}>Ativo</option>
+              <option value="inativo" {% if funcao_edit.status == 'inativo' %}selected{% endif %}>Inativo</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="descricao_funcao" class="form-label">Descrição <span class="texto-obrigatorio">*</span></label>
+            <textarea class="form-control" id="descricao_funcao" name="descricao_funcao" rows="3" required maxlength="500">{{ funcao_edit.descricao }}</textarea>
+          </div>
+
+          <div class="mb-4">
+            <span class="form-label d-block mb-2">Permissões de acesso ao menu</span>
+            <div class="list-group list-group-flush border rounded overflow-hidden shadow-sm list-group-borda-laranja">
+              {% for perm in permissoes_catalogo %}
+              <label class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3 mb-0 list-group-item-laranja-hover" for="perm_{{ perm.key }}">
+                <input class="form-check-input flex-shrink-0 mt-0" type="checkbox" name="permissoes"
+                  value="{{ perm.key }}" id="perm_{{ perm.key }}"
+                  {% if perm.key in perms_atual %}checked{% endif %} />
+                <span class="d-flex align-items-center gap-2 flex-grow-1">
+                  <i class="bi {{ perm.icone }} text-laranja"></i>
+                  <span>{{ perm.label }}</span>
+                </span>
+              </label>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="d-flex flex-wrap gap-2">
+            <button type="submit" class="btn btn-laranja px-4">
+              <i class="bi bi-check-lg me-1"></i>Salvar alterações
+            </button>
+            <a href="{{ url_for('listar_funcoes') }}" class="btn btn-outline-secondary px-4">Cancelar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

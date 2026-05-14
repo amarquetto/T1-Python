@@ -3,12 +3,11 @@
 
 {% block conteudo %}
 
-<!-- Cabeçalho da seção -->
 <div class="mb-4">
   <h1 class="pagina-titulo mb-1">
     <i class="bi bi-person-plus-fill me-2 text-laranja"></i>Novo Usuário
   </h1>
-  <p class="text-muted small mb-0">Preencha os dados para cadastrar um novo usuário no sistema</p>
+  <p class="text-muted small mb-0">Preencha os dados e vincule uma <strong>função cadastrada</strong> (define permissões de menu).</p>
 </div>
 
 <div class="row">
@@ -16,92 +15,49 @@
     <div class="card shadow-sm border-0">
       <div class="card-body p-4">
 
-        <!-- Formulário de inserção de usuário - Enviando os dados para a rota de inserir_usuario -->
         <form method="POST" action="{{ url_for('inserir_usuario') }}" novalidate>
 
-          <!-- Campo: Nome completo -->
           <div class="mb-3">
             <label for="nome" class="form-label">
               Nome completo <span class="texto-obrigatorio">*</span>
             </label>
-            <input
-              type="text"
-              class="form-control"
-              id="nome"
-              name="nome"
-              placeholder="Ex.: Ana Paula Ferreira"
-              required
-              maxlength="100"
-            />
+            <input type="text" class="form-control" id="nome" name="nome" placeholder="Ex.: Ana Paula Ferreira" required maxlength="100" />
             <div class="form-text">Nome que será exibido no sistema.</div>
           </div>
 
-          <!-- Campo: E-mail -->
           <div class="mb-3">
             <label for="email" class="form-label">
               E-mail <span class="texto-obrigatorio">*</span>
             </label>
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              name="email"
-              placeholder="Ex.: ana@patafeliz.com"
-              required
-            />
+            <input type="email" class="form-control" id="email" name="email" placeholder="Ex.: ana@patafeliz.com" required />
             <div class="form-text">Será usado para login no sistema.</div>
           </div>
 
-          <!-- Campo: Perfil de acesso -->
           <div class="mb-3">
-            <label for="perfil" class="form-label">
-              Perfil de acesso <span class="texto-obrigatorio">*</span>
+            <label for="funcao_id" class="form-label">
+              Função (perfil de acesso) <span class="texto-obrigatorio">*</span>
             </label>
-            <select class="form-select" id="perfil" name="perfil" required>
-              <option value="" disabled selected>Selecione um perfil...</option>
-              <option value="Administrador">Administrador — acesso total ao sistema</option>
-              <option value="Veterinário">Veterinário — acesso a prontuários e consultas</option>
-              <option value="Atendente">Atendente — agendamentos e atendimento ao cliente</option>
+            <select class="form-select" id="funcao_id" name="funcao_id" required>
+              <option value="" disabled selected>Selecione uma função cadastrada…</option>
+              {% for fn in funcoes %}
+              <option value="{{ fn.id }}">{{ fn.nome }} — {{ fn.descricao[:80] }}{% if fn.descricao|length > 80 %}…{% endif %}</option>
+              {% endfor %}
             </select>
+            <div class="form-text">As permissões vêm do cadastro de funções.</div>
           </div>
 
-          <!-- Campo: Senha -->
-          <div class="mb-3">
+          <div class="mb-4">
             <label for="senha" class="form-label">
               Senha <span class="texto-obrigatorio">*</span>
             </label>
-            <input
-              type="password"
-              class="form-control"
-              id="senha"
-              name="senha"
-              placeholder="Mínimo 6 caracteres"
-              required
-              minlength="6"
-            />
-            <div class="form-text">O usuário poderá alterar a senha após o primeiro acesso.</div>
+            <input type="password" class="form-control" id="senha" name="senha" placeholder="Mínimo 6 caracteres" required minlength="6" />
+            <div class="form-text">O usuário poderá alterar a senha depois, se você habilitar edição.</div>
           </div>
 
-          <!-- Campo: Telefone (opcional) -->
-          <div class="mb-4">
-            <label for="telefone" class="form-label">Telefone</label>
-            <input
-              type="tel"
-              class="form-control"
-              id="telefone"
-              name="telefone"
-              placeholder="Ex.: (14) 99999-0000"
-              maxlength="15"
-            />
-            <div class="form-text">Campo opcional.</div>
-          </div>
-
-          <!-- Botões de ação -->
           <div class="d-flex gap-2">
             <button type="submit" class="btn btn-laranja px-4">
               <i class="bi bi-check-lg me-1"></i>Salvar
             </button>
-            <!-- Cancelar retorna para a listagem de usuários -->
             <a href="{{ url_for('listar_usuarios') }}" class="btn btn-outline-secondary px-4">
               <i class="bi bi-x-lg me-1"></i>Cancelar
             </a>

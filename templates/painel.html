@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block titulo %}Painel — PataFeliz{% endblock %}
+
+{% block conteudo %}
+<div class="mb-4">
+  <h1 class="pagina-titulo mb-1">
+    <i class="bi bi-speedometer2 me-2 text-laranja"></i>Painel
+  </h1>
+  <p class="text-muted small mb-0">Acesse as áreas liberadas pela sua função no sistema.</p>
+</div>
+
+<div class="row g-3">
+  {% if pode('gerenciar_usuarios') %}
+  <div class="col-md-6 col-lg-4">
+    <a href="{{ url_for('listar_usuarios') }}" class="text-decoration-none">
+      <div class="card shadow-sm border-0 h-100 card-faixa-laranja">
+        <div class="card-body p-4">
+          <i class="bi bi-people-fill fs-2 text-laranja d-block mb-2"></i>
+          <h2 class="h5 text-dark">Usuários</h2>
+          <p class="small text-muted mb-0">Listar e cadastrar usuários do sistema.</p>
+        </div>
+      </div>
+    </a>
+  </div>
+  {% endif %}
+
+  {% if pode('gerenciar_funcoes') %}
+  <div class="col-md-6 col-lg-4">
+    <a href="{{ url_for('listar_funcoes') }}" class="text-decoration-none">
+      <div class="card shadow-sm border-0 h-100 card-faixa-laranja">
+        <div class="card-body p-4">
+          <i class="bi bi-shield-lock fs-2 text-laranja d-block mb-2"></i>
+          <h2 class="h5 text-dark">Funções</h2>
+          <p class="small text-muted mb-0">Funções cadastradas e permissões de menu.</p>
+        </div>
+      </div>
+    </a>
+  </div>
+  {% endif %}
+
+  {% if pode('gerenciar_pets') %}
+  <div class="col-md-6 col-lg-4">
+    <a href="{{ url_for('listar_pets') }}" class="text-decoration-none">
+      <div class="card shadow-sm border-0 h-100 card-faixa-laranja">
+        <div class="card-body p-4">
+          <i class="bi bi-heart-fill fs-2 text-laranja d-block mb-2"></i>
+          <h2 class="h5 text-dark">Pets</h2>
+          <p class="small text-muted mb-0">Cadastro e gestão de pets.</p>
+        </div>
+      </div>
+    </a>
+  </div>
+  {% endif %}
+
+  {% if pode('gerenciar_servicos') %}
+  <div class="col-md-6 col-lg-4">
+    <a href="{{ url_for('listar_servicos') }}" class="text-decoration-none">
+      <div class="card shadow-sm border-0 h-100 card-faixa-laranja">
+        <div class="card-body p-4">
+          <i class="bi bi-scissors fs-2 text-laranja d-block mb-2"></i>
+          <h2 class="h5 text-dark">Serviços</h2>
+          <p class="small text-muted mb-0">Catálogo de serviços do petshop.</p>
+        </div>
+      </div>
+    </a>
+  </div>
+  {% endif %}
+
+  {% if pode('emitir_relatorios') %}
+  <div class="col-md-6 col-lg-4">
+    <a href="{{ url_for('relatorios') }}" class="text-decoration-none">
+      <div class="card shadow-sm border-0 h-100 card-faixa-laranja">
+        <div class="card-body p-4">
+          <i class="bi bi-file-earmark-bar-graph fs-2 text-laranja d-block mb-2"></i>
+          <h2 class="h5 text-dark">Relatórios</h2>
+          <p class="small text-muted mb-0">Emissão de relatórios do negócio.</p>
+        </div>
+      </div>
+    </a>
+  </div>
+  {% endif %}
+</div>
+
+{% if not (pode('gerenciar_usuarios') or pode('gerenciar_funcoes') or pode('gerenciar_pets') or pode('gerenciar_servicos') or pode('emitir_relatorios')) %}
+<div class="alert alert-warning mt-4 shadow-sm">
+  Nenhuma área foi liberada para o seu usuário. Solicite ao administrador que ajuste a <strong>função</strong> vinculada à sua conta.
+</div>
+{% endif %}
+
+{% endblock %}

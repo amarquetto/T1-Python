@@ -1,32 +1,62 @@
 """
 Popula o banco na primeira execução (tabelas vazias).
-Senha de todos os usuários seed: 123456
+Senha dos usuários seed: 123456
 """
 
 from werkzeug.security import generate_password_hash
 
 from extensions import db
-from models import Pet, Servico, Usuario
+from models import Funcao, Pet, Servico, Usuario
 
 
 def seed_if_empty() -> None:
     if Usuario.query.count() > 0:
         return
 
+    todas = [
+        "dashboard",
+        "gerenciar_usuarios",
+        "gerenciar_funcoes",
+        "gerenciar_pets",
+        "gerenciar_servicos",
+        "emitir_relatorios",
+    ]
+    admin = Funcao(
+        nome="Administrador",
+        status="ativo",
+        descricao="Acesso total ao sistema.",
+        permissoes=todas,
+    )
+    atendente = Funcao(
+        nome="Atendente",
+        status="ativo",
+        descricao="Operações básicas: painel e pets.",
+        permissoes=["dashboard", "gerenciar_pets"],
+    )
+    db.session.add_all([admin, atendente])
+    db.session.commit()
+
+    admin_id = Funcao.query.filter_by(nome="Administrador").first().id
+    atend_id = Funcao.query.filter_by(nome="Atendente").first().id
+
     senha = generate_password_hash("123456")
     usuarios_seed = [
-        ("Ingrid Venancio", "ingrid.venancio@patafeliz.com", "Administrador", "Sim"),
-        ("Andre Marquetto", "andre@patafeliz.com", "Administrador", "Sim"),
+        ("Ingrid Venancio", "ingrid.venancio@patafeliz.com", admin_id, "Sim"),
+        ("Andre Marquetto", "andre@patafeliz.com", admin_id, "Sim"),
+        ("Carla Mendes", "carla@patafeliz.com", atend_id, "Sim"),
+        ("Diego Rocha", "diego@patafeliz.com", atend_id, "Não"),
+        ("Eduarda Farias", "edu@patafeliz.com", atend_id, "Sim"),
     ]
-
-    for nome, email, perfil, ativo in usuarios_seed:
+    for nome, email, fid, ativo in usuarios_seed:
+        fn = db.session.get(Funcao, fid)
         db.session.add(
             Usuario(
                 nome=nome,
                 email=email,
-                perfil=perfil,
+                perfil=fn.nome if fn else "Atendente",
                 ativo=ativo,
                 senha_hash=senha,
+                funcao_id=fid,
             )
         )
 
@@ -34,6 +64,8 @@ def seed_if_empty() -> None:
         ("Thor", "Cão", "Golden Retriever", 3, "João Alves", "32 kg"),
         ("Mel", "Gato", "Persa", 5, "Maria Costa", "4 kg"),
         ("Bob", "Cão", "Bulldog Francês", 2, "Pedro Santos", "12 kg"),
+        ("Luna", "Gato", "Siamês", 1, "Clara Nunes", "3,5 kg"),
+        ("Bolinha", "Cão", "Poodle", 7, "Rafa Moura", "8 kg"),
         ("Pipoca", "Coelho", "Angorá", 2, "Luana Barros", "2 kg"),
     ]
     for nome, especie, raca, idade, tutor, peso in pets_seed:
@@ -59,7 +91,5 @@ def seed_if_empty() -> None:
                 disponivel=disp,
             )
         )
-
-    # Funções: começar vazio (cadastro pela tela), ou exemplo opcional — deixamos vazio
 
     db.session.commit()

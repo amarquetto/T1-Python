@@ -34,25 +34,56 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-1">
 
           <li class="nav-item">
-            <a class="nav-link nav-link-sistema {% if request.path.startswith('/usuarios') %}active{% endif %}"
+            <a class="nav-link nav-link-sistema {% if request.path == '/painel' %}active{% endif %}"
+               href="{{ url_for('painel') }}">
+              <i class="bi bi-speedometer2 me-1"></i>Painel
+            </a>
+          </li>
+
+          {% if pode('gerenciar_usuarios') %}
+          <li class="nav-item">
+            <a class="nav-link nav-link-sistema {% if request.path.startswith('/usuarios') and not request.path.startswith('/usuarios/listar-funcoes') and not request.path.startswith('/usuarios/cadastrar-funcoes') and not request.path.startswith('/usuarios/editar-funcao') %}active{% endif %}"
                href="{{ url_for('listar_usuarios') }}">
               <i class="bi bi-people-fill me-1"></i>Usuários
             </a>
           </li>
+          {% endif %}
 
+          {% if pode('gerenciar_funcoes') %}
+          <li class="nav-item">
+            <a class="nav-link nav-link-sistema {% if request.path.startswith('/usuarios/listar-funcoes') or request.path.startswith('/usuarios/cadastrar-funcoes') or request.path.startswith('/usuarios/editar-funcao') %}active{% endif %}"
+               href="{{ url_for('listar_funcoes') }}">
+              <i class="bi bi-shield-lock me-1"></i>Funções
+            </a>
+          </li>
+          {% endif %}
+
+          {% if pode('gerenciar_pets') %}
           <li class="nav-item">
             <a class="nav-link nav-link-sistema {% if request.path.startswith('/pets') %}active{% endif %}"
                href="{{ url_for('listar_pets') }}">
               <i class="bi bi-heart-fill me-1"></i>Pets
             </a>
           </li>
+          {% endif %}
 
+          {% if pode('gerenciar_servicos') %}
           <li class="nav-item">
             <a class="nav-link nav-link-sistema {% if request.path.startswith('/servicos') %}active{% endif %}"
                href="{{ url_for('listar_servicos') }}">
               <i class="bi bi-scissors me-1"></i>Serviços
             </a>
           </li>
+          {% endif %}
+
+          {% if pode('emitir_relatorios') %}
+          <li class="nav-item">
+            <a class="nav-link nav-link-sistema {% if request.path.startswith('/relatorios') %}active{% endif %}"
+               href="{{ url_for('relatorios') }}">
+              <i class="bi bi-file-earmark-bar-graph me-1"></i>Relatórios
+            </a>
+          </li>
+          {% endif %}
 
           <li class="nav-item">
             <a class="nav-link nav-link-sistema {% if request.path == '/equipe' %}active{% endif %}"
