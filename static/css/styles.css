@@ -386,6 +386,41 @@ body {
   color: var(--laranja) !important;
 }
 
+/* Faixa superior laranja nos cards (cadastros e blocos do sistema) */
+.card-faixa-laranja {
+  border-top: 4px solid var(--laranja);
+}
+
+/* Cabeçalho de card com faixa em gradiente laranja (títulos de seção) */
+.card-header-laranja {
+  background: linear-gradient(135deg, var(--laranja), #ff9800);
+  color: #fff;
+  border: none;
+  font-family: var(--fonte-display);
+}
+.card-header-laranja .card-header-sub {
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 1;
+}
+.card > .card-header-laranja:first-child {
+  border-top-left-radius: var(--bs-card-inner-border-radius, var(--bs-border-radius));
+  border-top-right-radius: var(--bs-card-inner-border-radius, var(--bs-border-radius));
+}
+
+/* Lista de permissões: borda laranja suave e hover alinhado ao sistema */
+.list-group-borda-laranja {
+  border-color: var(--laranja-borda) !important;
+}
+.list-group-item-laranja-hover:hover {
+  background-color: var(--laranja-claro);
+}
+
+/* Rodapé de card com faixa superior discreta (laranja claro) */
+.card-footer-faixa-laranja {
+  border-top: 2px solid var(--laranja-claro) !important;
+  background: #fff;
+}
+
 /* Cabeçalho das tabelas */
 .thead-laranja th {
   background-color: var(--laranja);

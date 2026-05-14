@@ -22,6 +22,18 @@ usuarios = [
     {'id': 5, 'nome': 'Eduarda Farias', 'email': 'edu@patafeliz.com',    'perfil': 'Veterinário',   'ativo': 'Sim'},
 ]
 
+# Catálogo de permissões no cadastro de funções (ordem alinhada ao menu do sistema)
+PERMISSOES_CATALOGO = [
+    {'key': 'dashboard', 'label': 'Dashboard', 'icone': 'bi-speedometer2'},
+    {'key': 'gerenciar_usuarios', 'label': 'Gerenciar usuários', 'icone': 'bi-people'},
+    {'key': 'gerenciar_funcoes', 'label': 'Gerenciar funções', 'icone': 'bi-shield-check'},
+    {'key': 'gerenciar_pets', 'label': 'Gerenciar pets', 'icone': 'bi-heart'},
+    {'key': 'emitir_relatorios', 'label': 'Emitir relatórios', 'icone': 'bi-file-earmark-bar-graph'},
+]
+
+# Funções cadastradas pelo usuário (nome livre + status + permissões)
+funcoes = []
+
 # Lista de pets cadastrados no sistema
 pets = [
     {'id': 1, 'nome': 'Thor',    'especie': 'Cão',   'raca': 'Golden Retriever', 'idade': 3, 'tutor': 'João Alves',    'peso': '32 kg'},
@@ -139,6 +151,58 @@ def login_required(f):
 def listar_usuarios():
     """Exibe a tabela com todos os usuários cadastrados no sistema."""
     return render_template('usuarios/listar_usuarios.html', usuarios=usuarios)
+
+
+@app.route('/usuarios/listar-funcoes')
+@login_required
+def listar_funcoes():
+    """Listagem das funções cadastradas (permissões e status)."""
+    return render_template(
+        'usuarios/listar_funcoes.html',
+        funcoes=funcoes,
+        permissoes_catalogo=PERMISSOES_CATALOGO,
+    )
+
+
+@app.route('/usuarios/cadastrar-funcoes', methods=['GET', 'POST'])
+@login_required
+def cadastrar_funcoes():
+    """
+    GET  → formulário para cadastrar uma nova função com nome livre, status e permissões.
+    POST → valida, grava em memória e redireciona para a listagem de funções.
+    """
+    if request.method == 'POST':
+        nome_funcao = request.form.get('nome_funcao', '').strip()
+        status = request.form.get('status_funcao', '').strip()
+        descricao = request.form.get('descricao_funcao', '').strip()
+        permissoes = request.form.getlist('permissoes')
+
+        if not nome_funcao:
+            flash('Informe o nome da função.', 'danger')
+        elif len(nome_funcao) > 120:
+            flash('O nome da função pode ter no máximo 120 caracteres.', 'danger')
+        elif status not in ('ativo', 'inativo'):
+            flash('Selecione se a função ficará ativa ou inativa.', 'danger')
+        elif not descricao:
+            flash('Informe a descrição com as responsabilidades da função.', 'danger')
+        else:
+            novo_id = max((item['id'] for item in funcoes), default=0) + 1
+            chaves_validas = {p['key'] for p in PERMISSOES_CATALOGO}
+            permissoes_limpas = [k for k in permissoes if k in chaves_validas]
+            funcoes.append({
+                'id': novo_id,
+                'nome': nome_funcao,
+                'status': status,
+                'descricao': descricao,
+                'permissoes': permissoes_limpas,
+            })
+            flash('Função cadastrada com sucesso!', 'success')
+            return redirect(url_for('listar_funcoes'))
+
+    return render_template(
+        'usuarios/cadastrar_funcoes.html',
+        permissoes_catalogo=PERMISSOES_CATALOGO,
+    )
 
 
 @app.route('/usuarios/inserir', methods=['GET', 'POST'])

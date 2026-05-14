@@ -4,17 +4,24 @@
 {% block conteudo %}
 
 <!-- Cabeçalho da seção -->
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3 mb-4">
   <div>
     <h1 class="pagina-titulo mb-1">
       <i class="bi bi-people-fill me-2 text-laranja"></i>Usuários do Sistema
     </h1>
     <p class="text-muted small mb-0">Gerencie os usuários com acesso ao PataFeliz</p>
   </div>
-  <!-- Botão para inserir novo usuário -->
-  <a href="{{ url_for('inserir_usuario') }}" class="btn btn-laranja">
-    <i class="bi bi-plus-lg me-1"></i>Novo Usuário
-  </a>
+  <div class="d-flex flex-wrap gap-2">
+    <a href="{{ url_for('listar_funcoes') }}" class="btn btn-outline-laranja">
+      <i class="bi bi-list-check me-1"></i>Funções cadastradas
+    </a>
+    <a href="{{ url_for('cadastrar_funcoes') }}" class="btn btn-outline-laranja">
+      <i class="bi bi-shield-lock me-1"></i>Cadastrar funções
+    </a>
+    <a href="{{ url_for('inserir_usuario') }}" class="btn btn-laranja">
+      <i class="bi bi-plus-lg me-1"></i>Novo Usuário
+    </a>
+  </div>
 </div>
 
 <!-- Tabela de usuários -->
@@ -33,13 +40,12 @@
           </tr>
         </thead>
         <tbody>
-          {% for u in usuarios %} 
+          {% for u in usuarios %}
           <tr>
             <td class="text-muted small">{{ u.id }}</td>
             <td><strong>{{ u.nome }}</strong></td>
             <td>{{ u.email }}</td>
             <td>
-              <!-- Badge de perfil com cores diferentes por tipo -->
               {% if u.perfil == 'Administrador' %}
                 <span class="badge bg-danger">{{ u.perfil }}</span>
               {% elif u.perfil == 'Veterinário' %}
@@ -56,7 +62,7 @@
               {% endif %}
             </td>
             <td class="text-center">
-              <!-- Botões de ação (editar/excluir) — sem rota funcional nesta entrega -->
+              
               <button class="btn btn-sm btn-outline-primary me-1" title="Editar usuário">
                 <i class="bi bi-pencil"></i>
               </button>
@@ -72,7 +78,6 @@
       </table>
     </div>
   </div>
-  <!-- Rodapé da tabela com contagem -->
   <div class="card-footer text-muted small">
     Total de registros: <strong>{{ usuarios|length }}</strong>
   </div>

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block titulo %}Cadastrar funções — PataFeliz{% endblock %}
+
+{% block conteudo %}
+
+<!-- Cabeçalho da seção (padrão das telas do sistema) -->
+<div class="mb-4">
+  <h1 class="pagina-titulo mb-1">
+    <i class="bi bi-shield-lock-fill me-2 text-laranja"></i>Cadastrar funções
+  </h1>
+  <p class="text-muted small mb-0">Crie funções com nome próprio, defina se ficam ativas ou inativas, descreva responsabilidades e marque as permissões de menu.</p>
+</div>
+
+<div class="row">
+  <div class="col-lg-8">
+    <div class="card shadow-sm border-0 card-faixa-laranja">
+      <div class="card-body p-4">
+        <form method="POST" action="{{ url_for('cadastrar_funcoes') }}" novalidate>
+
+          <div class="mb-3">
+            <label for="nome_funcao" class="form-label">Nome da função <span class="texto-obrigatorio">*</span></label>
+            <input
+              type="text"
+              class="form-control"
+              id="nome_funcao"
+              name="nome_funcao"
+              placeholder="Ex.: Recepção, Administrador do sistema, Estagiário…"
+              required
+              maxlength="120"
+            />
+            <div class="form-text">Digite o nome que identifica esta função no petshop.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="status_funcao" class="form-label">Status <span class="texto-obrigatorio">*</span></label>
+            <select class="form-select" id="status_funcao" name="status_funcao" required>
+              <option value="" disabled selected>Selecione se a função ficará ativa ou inativa…</option>
+              <option value="ativo">Ativo</option>
+              <option value="inativo">Inativo</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="descricao_funcao" class="form-label">Descrição <span class="texto-obrigatorio">*</span></label>
+            <textarea class="form-control" id="descricao_funcao" name="descricao_funcao" rows="3"
+              placeholder="Descreva as responsabilidades desta função no sistema…" required maxlength="500"></textarea>
+            <div class="form-text">Responsabilidades e escopo desta função.</div>
+          </div>
+
+          <div class="mb-4">
+            <span class="form-label d-block mb-2">Permissões de acesso ao menu</span>
+            <div class="list-group list-group-flush border rounded overflow-hidden shadow-sm list-group-borda-laranja">
+              {% for perm in permissoes_catalogo %}
+              <label class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3 mb-0 list-group-item-laranja-hover" for="perm_{{ perm.key }}">
+                <input class="form-check-input flex-shrink-0 mt-0" type="checkbox" name="permissoes"
+                  value="{{ perm.key }}" id="perm_{{ perm.key }}" />
+                <span class="d-flex align-items-center gap-2 flex-grow-1">
+                  <i class="bi {{ perm.icone }} text-laranja"></i>
+                  <span>{{ perm.label }}</span>
+                </span>
+              </label>
+              {% endfor %}
+            </div>
+            <div class="form-text">Marque cada área do sistema que esta função poderá utilizar.</div>
+          </div>
+
+          <div class="d-flex flex-wrap gap-2">
+            <button type="submit" class="btn btn-laranja px-4">
+              <i class="bi bi-check-lg me-1"></i>Salvar função
+            </button>
+            <a href="{{ url_for('listar_funcoes') }}" class="btn btn-outline-laranja px-4">
+              <i class="bi bi-list-check me-1"></i>Funções cadastradas
+            </a>
+            <a href="{{ url_for('listar_usuarios') }}" class="btn btn-outline-secondary px-4">
+              <i class="bi bi-arrow-left me-1"></i>Voltar para usuários
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
